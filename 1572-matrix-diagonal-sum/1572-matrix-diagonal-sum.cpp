@@ -1,23 +1,17 @@
 class Solution {
 public:
     int diagonalSum(vector<vector<int>>& mat) {
-        int sum=0;
         int n=mat.size();
-        int x=0,y=n-1;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<mat[0].size();j++){
-                if(i==j){
-                    sum+=mat[i][j];
-                    if(n%2!=0 && i==n/2 && j==n/2){
-                        x++,y--;
-                    }
-                }else if(i==x && j==y){
-                    sum+=mat[i][y];
-                    x++,y--;
-                }
-                cout<<sum<<" ";
-            }
+        int x=0; //primary diagonal sum
+        int y=0; //secondary diagonal sum
+        for(int i=0;i<mat.size();i++){
+            x+=mat[i][i];
+            y+=mat[i][n-i-1];
         }
-        return sum;
+        if(n%2==0){
+            return x+y;
+        }
+        return x+y-mat[n/2][n/2];
+            
     }
 };
