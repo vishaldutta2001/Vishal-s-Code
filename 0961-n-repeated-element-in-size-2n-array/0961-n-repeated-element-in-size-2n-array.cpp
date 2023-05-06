@@ -1,13 +1,13 @@
 class Solution {
 public:
     int repeatedNTimes(vector<int>& nums) {
+        set<int> s;
         int res;
-        sort(nums.begin(),nums.end());
-        for(int i=0;i<nums.size()-1;i++){
-            if(nums[i]==nums[i+1]){
-                res=nums[i];
-                break;
-            }
+        for(int n:nums){
+            if(s.count(n)){
+                res=n;
+            }       
+            s.insert(n);
         }
         return res;
     }
