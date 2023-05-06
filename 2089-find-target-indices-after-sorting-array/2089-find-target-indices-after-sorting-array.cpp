@@ -1,11 +1,27 @@
 class Solution {
 public:
+    vector<int> ans;
     vector<int> targetIndices(vector<int>& nums, int target) {
-        vector<int> v;
         sort(nums.begin(),nums.end());
-        for(int i=0;i<nums.size();i++){
-            if(nums[i]==target) v.push_back(i);
+        int s=0,e=nums.size()-1;
+        binarySearch(nums,s,e,target);
+        return ans;
+    }
+    void binarySearch(vector<int> nums, int s, int e, int target){
+        if(s>e){
+            return ;
         }
-        return v;
+        int mid=s+(e-s)/2;
+        if(nums[mid]==target){
+            binarySearch(nums,s,mid-1,target);
+            ans.push_back(mid);
+            binarySearch(nums,mid+1,e,target);
+        }
+        else if(nums[mid]>target){
+            binarySearch(nums,s,mid-1,target);
+        }
+        else{
+            binarySearch(nums,mid+1,e,target);
+        }
     }
 };
