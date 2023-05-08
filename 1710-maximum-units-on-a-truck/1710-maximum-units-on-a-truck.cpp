@@ -1,21 +1,22 @@
 class Solution {
-    private:
-    bool static sortCol(vector<int>& v1, vector<int>& v2){
-        return v1[1]>v2[1];
-    }
 public:
     int maximumUnits(vector<vector<int>>& boxTypes, int truckSize) {
-        int max=0;
-        sort(boxTypes.begin(),boxTypes.end(),sortCol);
-        // 5,10  3,9   4,7   2,5
-
-        for(auto &el:boxTypes){ 
-            int currBatch=min(el[0],truckSize);
+        //maintain the maxUnit and minUNit and stored their corresponding box size in the array
+        int minUnit=INT_MAX, maxUnit=INT_MIN, res=0;
+        int arr[1001]={0};
+        for(auto el:boxTypes){
+            minUnit=min(minUnit,el[1]);
+            maxUnit=max(maxUnit,el[1]);
+            arr[el[1]]+=el[0];
+        }
+        for(int i=maxUnit,size ;i>=minUnit;i--){
+            size=arr[i];
+            if(!size) continue;
+            int currBatch=min(size,truckSize);
+            res+=currBatch*i;
             truckSize-=currBatch;
-            max+= currBatch*el[1];
             if(!truckSize) break;
         }
-        return max;
+        return res;
     }
 };
-//[](auto &v1,auto &v2){return v1[1]>v2[1];}
