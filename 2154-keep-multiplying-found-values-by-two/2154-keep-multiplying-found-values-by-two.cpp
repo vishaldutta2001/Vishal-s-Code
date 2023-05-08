@@ -1,14 +1,9 @@
 class Solution {
 public:
     int findFinalValue(vector<int>& nums, int original) {
-        set<int> s(nums.begin(), nums.end());
-        while(true){
-            if(s.count(original) == 0){
-                return original;
-            }
-            else{
-                original=2*original;
-            }
-        }
+        vector<bool> check(1001,false);
+        for(auto n:nums) check[n]=true;
+        while(original<1001 && check[original]) original=2*original;
+        return original;
     }
 };
