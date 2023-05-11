@@ -1,35 +1,28 @@
 class Solution {
+    int binary(vector<int> A){
+        int s=0,e=A.size()-1;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(A[mid]==0){
+                e=mid-1;
+            }else if(A[mid]==1){
+                s=mid+1;
+            }
+        }
+        return s;
+    }
 public:
     vector<int> kWeakestRows(vector<vector<int>>& mat, int k) {
-        vector<int> fre(101,-2);
-        int m=mat.size(), n=mat[0].size();
-        for(int i=0;i<m;i++){
-            int cnt=0;
-            for(int j=0;j<n;j++){
-                if(mat[i][j]==1){
-                    cnt++;
-                }
-                else{
-                    break;
-                }
-            }
-            fre[i]=cnt;
-        }//0-2  1-4  2-1   3-2  4-5
-        
+        vector<pair<int,int>> p;//storing pairs of count and their index
+        int m=mat.size();
         vector<int> res;
-        while(k--){
-            int min=INT_MAX,minIndex=0;
-            int i=0;
-            for(;i<101;i++){
-                if(fre[i]==-2) break;
-                if(fre[i]!=-1 && min>fre[i] ){
-                    min=fre[i];
-                    minIndex=i;
-                }
-                
-            }
-            res.push_back(minIndex);
-            fre[minIndex]=-1;
+        for(int i=0;i<m;i++){
+            int cnt=binary(mat[i]);
+            p.push_back({cnt,i});
+        }
+        sort(p.begin(),p.end());
+        for(int i=0;i<k;i++){
+            res.push_back(p[i].second);
         }
         return res;
     }
