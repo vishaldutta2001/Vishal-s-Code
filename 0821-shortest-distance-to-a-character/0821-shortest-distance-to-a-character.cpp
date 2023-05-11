@@ -8,14 +8,16 @@ public:
                 ind.push_back(i);
             }
         }
+        int left=0,right=0;
         for(int i=0;i<s.size();i++){
-            int min=INT_MAX;
-            for(int j=0;j<ind.size();j++){
-                if(abs(i-ind[j])<min){
-                    min=abs(i-ind[j]);
+            if(i>ind[right]){
+                left=right;
+                if(ind.size()-1>right){
+                    right++;   
                 }
+                
             }
-            res.push_back(min);
+            res.push_back(min(abs(ind[left]-i),abs(ind[right]-i)));
         }
         return res;
     }
