@@ -1,31 +1,29 @@
 class Solution {
 public:
     vector<int> luckyNumbers (vector<vector<int>>& matrix) {
-        set<int> rowMin;
-        set<int> colMax;
+        int small,big;
         vector<int> res;
-        int m=matrix.size(),n=matrix[0].size();
+        int col;
+        int m=matrix.size(),n =matrix[0].size();
         for(int i=0;i<m;i++){
-            int min=INT_MAX;
+            small=INT_MAX;
+            col=0;
             for(int j=0;j<n;j++){
-                if(min>matrix[i][j]) min=matrix[i][j];
+                if(small>matrix[i][j]){
+                    small=matrix[i][j];
+                    col=j;
+                } 
             }
-            rowMin.insert(min);
-        }
-        
-        for(int j=0;j<n;j++){
-            int max=INT_MIN;
-            for(int i=0;i<m;i++){
-                if(max<matrix[i][j]) max=matrix[i][j];
+            big=small;
+            for(int j=0;j<m;j++){
+                if(big<matrix[j][col]){
+                    big=matrix[j][col];
+                }
             }
-            colMax.insert(max);
-        }
-        for(auto s:rowMin){
-            if(colMax.count(s)){
-                res.push_back(s);
+            if(small==big){
+                res.push_back(small);
             }
         }
-        
         return res;
     }
 };
